@@ -1,0 +1,36 @@
+{%extends 'layout.html'%}
+{%block body%}
+<div class="container col-6">
+    <div class="d-flex justify-content-between m-3">
+        <h5>Coding dojo Wall</h5>
+        <p>welcome {{ user.full_name() }}</p>
+        <a href="/logout">Log out</a>
+    </div>
+    
+    <hr>
+    <div class="form-group">
+        <form action="/post/message" method="post">
+            <label for='content' class="mb-2">What's on your mind? Create a new post:</label>
+            <textarea  class="form-control" name='content' id='content' style="height: 100px"></textarea>
+            <input type="hidden" name="user_id" value="{{user.id}}">
+        <input type="submit" value="submit" class="btn  btn-outline-primary m-3">
+        </form>
+    </div>
+    <hr>
+    <h4>all community post</h4>
+    <div class="card p-3 overflow-auto" style="max-height: 400px">
+        {%for post in post_data: %}
+            <p class="fw-bold m-2">{{post.user.first_name}} says- {{post.created_at.strftime("%b %d")}}:</p>
+            <p>{{post.content}}</p>
+            {% if post.user.id == user.id: %}
+                <a href="/post/delete/{{post.id}}" class="btn btn-outline-danger form-control">delete</a>
+            {%endif%}
+            <hr>
+        {%endfor%}
+        .
+    </div>
+
+    
+
+</div>
+{%endblock%} 
